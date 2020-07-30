@@ -105,7 +105,6 @@ routers.beforeEach((to, from, next) => {
 			let routerArray = deepClone(newRouters) //深拷贝api数据
 			routerArray[0].children = newchildren
             routers.addRoutes(routerArray) //添加动态路由
-            console.log()
 			store
 				.dispatch('getRouters', routerArray)
 				.then((res) => {
