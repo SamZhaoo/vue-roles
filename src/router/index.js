@@ -86,7 +86,6 @@ function deepClone(target) {
     return result;
 }
 routers.beforeEach((to, from, next) => {
-	console.log('+++++++++++++++++++++++++')
 	// debugger
 	if (store.state.roles) {
 		if (store.state.routers.length != 0) {
@@ -103,13 +102,14 @@ routers.beforeEach((to, from, next) => {
                     newchildren.push(item)
                 }
             }
-			let routerArray = deepClone(newRouters)
+			let routerArray = deepClone(newRouters) //深拷贝api数据
 			routerArray[0].children = newchildren
-            console.log(newRouters[0].children)
-			routers.addRoutes(routerArray) //添加动态路由
+            routers.addRoutes(routerArray) //添加动态路由
+            console.log()
 			store
 				.dispatch('getRouters', routerArray)
 				.then((res) => {
+                    console.log(routers)
 					next({ ...to })
 				})
 				.catch(() => {})
@@ -118,4 +118,10 @@ routers.beforeEach((to, from, next) => {
 		next()
 	}
 })
+
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push (location, onResolve, onReject) {
+  if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
+  return originalPush.call(this, location).catch(err => err)
+}
 export default routers
