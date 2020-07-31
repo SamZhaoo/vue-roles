@@ -108,7 +108,6 @@ routers.beforeEach((to, from, next) => {
 			store
 				.dispatch('getRouters', routerArray)
 				.then((res) => {
-                    console.log(routers)
 					next({ ...to })
 				})
 				.catch(() => {})
