@@ -1,6 +1,8 @@
 <template>
   <div class="main-panel">
-    <el-form class="form"  label-position="right" label-width="60px">
+    <el-form class="form"
+             label-position="right"
+             label-width="60px">
       <el-form-item label="用户名">
         <el-input v-model="model.name"
                   placeholder="请输入用户名"></el-input>
@@ -25,44 +27,48 @@ export default {
   data() {
     return {
       model: {
-        pwd: 123456
-      }
+        pwd: 123456,
+      },
     }
   },
   computed: {
-    ...mapState(['roles'])
+    ...mapState(['roles']),
   },
   methods: {
     loginClick() {
       this.getRoles(this.model).then(() => {
-          if(this.roles){
-              this.$router.push({ path: '/home/red' })
-          }
+        if (this.roles) {
+          this.$router.push({ path: '/home/red' })
+        }
       })
     },
-    ...mapActions(['getRoles'])
+    ...mapActions(['getRoles']),
   },
   created() {
-    document.onkeypress = function(e) {
+    let arrayTest = [1, 1, 2, 2, 3, 3]
+    console.log(this._.uniq(arrayTest))
+    let that = this
+    document.onkeypress = function (e) {
       var keycode = document.all ? event.keyCode : e.which
       if (keycode == 13) {
-        this.loginClick() // 登录方法名
+        console.log(that)
+        that.loginClick() // 登录方法名
         return false
       }
     }
-  }
+  },
 }
 </script>
 
 <style lang="scss">
 .main-panel {
   width: 280px;
-    position: fixed;
-    left: 39%;
-    top: 200px;
-    border: 1px solid skyblue;
-    border-radius: 15px;
-    padding: 38px 60px 5px 25px;
-    text-align: center;
+  position: fixed;
+  left: 39%;
+  top: 200px;
+  border: 1px solid skyblue;
+  border-radius: 15px;
+  padding: 38px 60px 5px 25px;
+  text-align: center;
 }
 </style>
